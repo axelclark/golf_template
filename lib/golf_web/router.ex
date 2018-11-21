@@ -16,6 +16,7 @@ defmodule GolfWeb.Router do
   scope "/", GolfWeb do
     pipe_through :browser
 
+    resources "/courses", CourseController
     get "/", PageController, :index
   end
 
