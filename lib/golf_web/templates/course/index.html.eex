@@ -13,7 +13,7 @@
 <%= for course <- @courses do %>
     <tr>
       <td><%= course.name %></td>
-      <td><%= course.holes %></td>
+      <td><%= course.num_holes %></td>
 
       <td>
         <%= link "Show", to: Routes.course_path(@conn, :show, course) %>

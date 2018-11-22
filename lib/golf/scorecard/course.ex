@@ -4,8 +4,8 @@ defmodule Golf.Scorecard.Course do
 
 
   schema "courses" do
-    field :holes, :integer
     field :name, :string
+    field :num_holes, :integer
 
     timestamps()
   end
@@ -13,7 +13,7 @@ defmodule Golf.Scorecard.Course do
   @doc false
   def changeset(course, attrs) do
     course
-    |> cast(attrs, [:name, :holes])
-    |> validate_required([:name, :holes])
+    |> cast(attrs, [:name, :num_holes])
+    |> validate_required([:name, :num_holes])
   end
 end

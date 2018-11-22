@@ -10,8 +10,8 @@
   <%= error_tag f, :name %>
 
   <%= label f, :holes %>
-  <%= number_input f, :holes %>
-  <%= error_tag f, :holes %>
+  <%= number_input f, :num_holes %>
+  <%= error_tag f, :num_holes %>
 
   <div>
     <%= submit "Save" %>

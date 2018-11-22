@@ -5,6 +5,6 @@ defmodule GolfWeb.Schema.ScorecardTypes do
   object :course do
     field :id, :id
     field :name, :string
-    field :holes, :integer
+    field :num_holes, :integer
   end
 end

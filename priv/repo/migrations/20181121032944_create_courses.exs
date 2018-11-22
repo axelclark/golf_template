@@ -4,7 +4,7 @@ defmodule Golf.Repo.Migrations.CreateCourses do
   def change do
     create table(:courses) do
       add :name, :string
-      add :holes, :integer
+      add :num_holes, :integer
 
       timestamps()
     end

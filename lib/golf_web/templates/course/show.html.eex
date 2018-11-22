@@ -9,7 +9,7 @@
 
   <li>
     <strong>Holes:</strong>
-    <%= @course.holes %>
+    <%= @course.num_holes %>
   </li>
 
 </ul>
