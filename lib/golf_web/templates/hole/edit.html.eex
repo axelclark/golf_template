@@ -1,0 +1,5 @@
+<h1>Edit Hole</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.hole_path(@conn, :update, @hole)) %>
+
+<span><%= link "Back", to: Routes.hole_path(@conn, :index) %></span>

@@ -1,0 +1,30 @@
+<h1>Listing Holes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Hole number</th>
+      <th>Par</th>
+      <th>Course</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for hole <- @holes do %>
+    <tr>
+      <td><%= hole.hole_number %></td>
+      <td><%= hole.par %></td>
+      <td><%= hole.course.name %></td>
+
+      <td>
+        <%= link "Show", to: Routes.hole_path(@conn, :show, hole) %>
+        <%= link "Edit", to: Routes.hole_path(@conn, :edit, hole) %>
+        <%= link "Delete", to: Routes.hole_path(@conn, :delete, hole), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Hole", to: Routes.hole_path(@conn, :new) %></span>

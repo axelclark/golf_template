@@ -1,0 +1,18 @@
+<h1>Show Hole</h1>
+
+<ul>
+
+  <li>
+    <strong>Hole number:</strong>
+    <%= @hole.hole_number %>
+  </li>
+
+  <li>
+    <strong>Par:</strong>
+    <%= @hole.par %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.hole_path(@conn, :edit, @hole) %></span>
+<span><%= link "Back", to: Routes.hole_path(@conn, :index) %></span>

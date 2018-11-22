@@ -63,4 +63,65 @@ defmodule Golf.ScorecardTest do
       assert %Ecto.Changeset{} = Scorecard.change_course(course)
     end
   end
+
+  describe "holes" do
+    alias Golf.Scorecard.Hole
+
+    @valid_attrs %{hole_number: 42, par: 42}
+    @update_attrs %{hole_number: 43, par: 43}
+    @invalid_attrs %{hole_number: nil, par: nil}
+
+    def hole_fixture(attrs \\ %{}) do
+      {:ok, hole} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Scorecard.create_hole()
+
+      hole
+    end
+
+    test "list_holes/0 returns all holes" do
+      hole = hole_fixture()
+      assert Scorecard.list_holes() == [hole]
+    end
+
+    test "get_hole!/1 returns the hole with given id" do
+      hole = hole_fixture()
+      assert Scorecard.get_hole!(hole.id) == hole
+    end
+
+    test "create_hole/1 with valid data creates a hole" do
+      assert {:ok, %Hole{} = hole} = Scorecard.create_hole(@valid_attrs)
+      assert hole.hole_number == 42
+      assert hole.par == 42
+    end
+
+    test "create_hole/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Scorecard.create_hole(@invalid_attrs)
+    end
+
+    test "update_hole/2 with valid data updates the hole" do
+      hole = hole_fixture()
+      assert {:ok, %Hole{} = hole} = Scorecard.update_hole(hole, @update_attrs)
+      assert hole.hole_number == 43
+      assert hole.par == 43
+    end
+
+    test "update_hole/2 with invalid data returns error changeset" do
+      hole = hole_fixture()
+      assert {:error, %Ecto.Changeset{}} = Scorecard.update_hole(hole, @invalid_attrs)
+      assert hole == Scorecard.get_hole!(hole.id)
+    end
+
+    test "delete_hole/1 deletes the hole" do
+      hole = hole_fixture()
+      assert {:ok, %Hole{}} = Scorecard.delete_hole(hole)
+      assert_raise Ecto.NoResultsError, fn -> Scorecard.get_hole!(hole.id) end
+    end
+
+    test "change_hole/1 returns a hole changeset" do
+      hole = hole_fixture()
+      assert %Ecto.Changeset{} = Scorecard.change_hole(hole)
+    end
+  end
 end
