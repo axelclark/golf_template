@@ -4,4 +4,7 @@ defmodule GolfWeb.Resolvers.Scorecard do
     {:ok, Golf.Scorecard.list_courses()}
   end
 
+  def find_hole(_parent, %{id: id}, _resolution) do
+    {:ok, Golf.Scorecard.get_hole!(id)}
+  end
 end

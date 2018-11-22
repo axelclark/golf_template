@@ -6,6 +6,7 @@ defmodule Golf.Scorecard.Course do
   schema "courses" do
     field :name, :string
     field :num_holes, :integer
+    has_many :holes, Golf.Scorecard.Hole
 
     timestamps()
   end
