@@ -20,8 +20,13 @@ defmodule GolfWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", GolfWeb do
-  #   pipe_through :api
-  # end
+  scope "/api" do
+    pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: GolfWeb.Schema
+
+    forward "/", Absinthe.Plug,
+      schema: GolfWeb.Schema
+  end
 end
