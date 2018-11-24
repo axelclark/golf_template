@@ -6,7 +6,9 @@ defmodule GolfWeb.Schema.ScorecardTypes do
     field :id, :id
     field :name, :string
     field :num_holes, :integer
-    field :holes, list_of(:hole)
+    field :holes, list_of(:hole) do
+      resolve &GolfWeb.Resolvers.Scorecard.holes_for_course/3
+    end
   end
 
   @desc "A hole on a course"
