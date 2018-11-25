@@ -1,0 +1,26 @@
+<h1>Listing Scores</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Num strokes</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for score <- @scores do %>
+    <tr>
+      <td><%= score.num_strokes %></td>
+
+      <td>
+        <%= link "Show", to: Routes.score_path(@conn, :show, score) %>
+        <%= link "Edit", to: Routes.score_path(@conn, :edit, score) %>
+        <%= link "Delete", to: Routes.score_path(@conn, :delete, score), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Score", to: Routes.score_path(@conn, :new) %></span>

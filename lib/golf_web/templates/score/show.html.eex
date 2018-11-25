@@ -1,0 +1,13 @@
+<h1>Show Score</h1>
+
+<ul>
+
+  <li>
+    <strong>Num strokes:</strong>
+    <%= @score.num_strokes %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.score_path(@conn, :edit, @score) %></span>
+<span><%= link "Back", to: Routes.score_path(@conn, :index) %></span>
