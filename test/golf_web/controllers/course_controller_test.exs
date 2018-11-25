@@ -3,9 +3,9 @@ defmodule GolfWeb.CourseControllerTest do
 
   alias Golf.Scorecard
 
-  @create_attrs %{holes: 42, name: "some name"}
-  @update_attrs %{holes: 43, name: "some updated name"}
-  @invalid_attrs %{holes: nil, name: nil}
+  @create_attrs %{num_holes: 42, name: "some name"}
+  @update_attrs %{num_holes: 43, name: "some updated name"}
+  @invalid_attrs %{num_holes: nil, name: nil}
 
   def fixture(:course) do
     {:ok, course} = Scorecard.create_course(@create_attrs)

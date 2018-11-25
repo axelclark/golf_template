@@ -6,9 +6,9 @@ defmodule Golf.ScorecardTest do
   describe "courses" do
     alias Golf.Scorecard.Course
 
-    @valid_attrs %{holes: 42, name: "some name"}
-    @update_attrs %{holes: 43, name: "some updated name"}
-    @invalid_attrs %{holes: nil, name: nil}
+    @valid_attrs %{num_holes: 42, name: "some name"}
+    @update_attrs %{num_holes: 43, name: "some updated name"}
+    @invalid_attrs %{num_holes: nil, name: nil}
 
     def course_fixture(attrs \\ %{}) do
       {:ok, course} =
@@ -31,7 +31,7 @@ defmodule Golf.ScorecardTest do
 
     test "create_course/1 with valid data creates a course" do
       assert {:ok, %Course{} = course} = Scorecard.create_course(@valid_attrs)
-      assert course.holes == 42
+      assert course.num_holes == 42
       assert course.name == "some name"
     end
 
@@ -42,7 +42,7 @@ defmodule Golf.ScorecardTest do
     test "update_course/2 with valid data updates the course" do
       course = course_fixture()
       assert {:ok, %Course{} = course} = Scorecard.update_course(course, @update_attrs)
-      assert course.holes == 43
+      assert course.num_holes == 43
       assert course.name == "some updated name"
     end
 
@@ -70,10 +70,14 @@ defmodule Golf.ScorecardTest do
     @valid_attrs %{hole_number: 42, par: 42}
     @update_attrs %{hole_number: 43, par: 43}
     @invalid_attrs %{hole_number: nil, par: nil}
+    @course_attrs %{name: "A", num_holes: 18}
 
     def hole_fixture(attrs \\ %{}) do
+      {:ok, course} = Scorecard.create_course(@course_attrs)
+
       {:ok, hole} =
         attrs
+        |> Map.put(:course_id, course.id)
         |> Enum.into(@valid_attrs)
         |> Scorecard.create_hole()
 
@@ -82,7 +86,9 @@ defmodule Golf.ScorecardTest do
 
     test "list_holes/0 returns all holes" do
       hole = hole_fixture()
-      assert Scorecard.list_holes() == [hole]
+
+      [result] = Scorecard.list_holes()
+      assert hole.id == result.id
     end
 
     test "get_hole!/1 returns the hole with given id" do
@@ -91,7 +97,10 @@ defmodule Golf.ScorecardTest do
     end
 
     test "create_hole/1 with valid data creates a hole" do
-      assert {:ok, %Hole{} = hole} = Scorecard.create_hole(@valid_attrs)
+      {:ok, course} = Scorecard.create_course(@course_attrs)
+      attrs = Map.put(@valid_attrs, :course_id, course.id)
+
+      assert {:ok, %Hole{} = hole} = Scorecard.create_hole(attrs)
       assert hole.hole_number == 42
       assert hole.par == 42
     end

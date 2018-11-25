@@ -6,10 +6,19 @@ defmodule GolfWeb.HoleControllerTest do
   @create_attrs %{hole_number: 42, par: 42}
   @update_attrs %{hole_number: 43, par: 43}
   @invalid_attrs %{hole_number: nil, par: nil}
+  @course_attrs %{name: "A", num_holes: 18}
 
   def fixture(:hole) do
-    {:ok, hole} = Scorecard.create_hole(@create_attrs)
+    {:ok, course} = Scorecard.create_course(@course_attrs)
+    attrs = Map.put(@create_attrs, :course_id, course.id)
+
+    {:ok, hole} = Scorecard.create_hole(attrs)
     hole
+  end
+
+  setup do
+    {:ok, course} = Scorecard.create_course(@course_attrs)
+    {:ok, course_id: course.id}
   end
 
   describe "index" do
@@ -27,8 +36,10 @@ defmodule GolfWeb.HoleControllerTest do
   end
 
   describe "create hole" do
-    test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.hole_path(conn, :create), hole: @create_attrs)
+    test "redirects to show when data is valid", %{conn: conn, course_id: course_id} do
+      attrs = Map.put(@create_attrs, :course_id, course_id)
+
+      conn = post(conn, Routes.hole_path(conn, :create), hole: attrs)
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.hole_path(conn, :show, id)

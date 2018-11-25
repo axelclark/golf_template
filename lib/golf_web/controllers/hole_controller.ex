@@ -23,7 +23,8 @@ defmodule GolfWeb.HoleController do
         |> redirect(to: Routes.hole_path(conn, :show, hole))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        courses = Scorecard.list_courses()
+        render(conn, "new.html", changeset: changeset, courses: courses)
     end
   end
 
@@ -49,7 +50,8 @@ defmodule GolfWeb.HoleController do
         |> redirect(to: Routes.hole_path(conn, :show, hole))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", hole: hole, changeset: changeset)
+        courses = Scorecard.list_courses()
+        render(conn, "edit.html", hole: hole, changeset: changeset, courses: courses)
     end
   end
 
