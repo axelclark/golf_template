@@ -5,8 +5,8 @@ defmodule Golf.Scorecard.Score do
 
   schema "scores" do
     field :num_strokes, :integer
-    field :hole_id, :id
-    field :round_id, :id
+    belongs_to(:hole, Golf.Scorecard.Hole)
+    belongs_to(:round, Golf.Scorecard.Round)
 
     timestamps()
   end
@@ -14,7 +14,7 @@ defmodule Golf.Scorecard.Score do
   @doc false
   def changeset(score, attrs) do
     score
-    |> cast(attrs, [:num_strokes])
-    |> validate_required([:num_strokes])
+    |> cast(attrs, [:num_strokes, :hole_id, :round_id])
+    |> validate_required([:num_strokes, :hole_id, :round_id])
   end
 end
