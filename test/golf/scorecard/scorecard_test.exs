@@ -133,4 +133,63 @@ defmodule Golf.ScorecardTest do
       assert %Ecto.Changeset{} = Scorecard.change_hole(hole)
     end
   end
+
+  describe "rounds" do
+    alias Golf.Scorecard.Round
+
+    @valid_attrs %{started_on: ~D[2010-04-17]}
+    @update_attrs %{started_on: ~D[2011-05-18]}
+    @invalid_attrs %{started_on: nil}
+
+    def round_fixture(attrs \\ %{}) do
+      {:ok, round} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Scorecard.create_round()
+
+      round
+    end
+
+    test "list_rounds/0 returns all rounds" do
+      round = round_fixture()
+      assert Scorecard.list_rounds() == [round]
+    end
+
+    test "get_round!/1 returns the round with given id" do
+      round = round_fixture()
+      assert Scorecard.get_round!(round.id) == round
+    end
+
+    test "create_round/1 with valid data creates a round" do
+      assert {:ok, %Round{} = round} = Scorecard.create_round(@valid_attrs)
+      assert round.started_on == ~D[2010-04-17]
+    end
+
+    test "create_round/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Scorecard.create_round(@invalid_attrs)
+    end
+
+    test "update_round/2 with valid data updates the round" do
+      round = round_fixture()
+      assert {:ok, %Round{} = round} = Scorecard.update_round(round, @update_attrs)
+      assert round.started_on == ~D[2011-05-18]
+    end
+
+    test "update_round/2 with invalid data returns error changeset" do
+      round = round_fixture()
+      assert {:error, %Ecto.Changeset{}} = Scorecard.update_round(round, @invalid_attrs)
+      assert round == Scorecard.get_round!(round.id)
+    end
+
+    test "delete_round/1 deletes the round" do
+      round = round_fixture()
+      assert {:ok, %Round{}} = Scorecard.delete_round(round)
+      assert_raise Ecto.NoResultsError, fn -> Scorecard.get_round!(round.id) end
+    end
+
+    test "change_round/1 returns a round changeset" do
+      round = round_fixture()
+      assert %Ecto.Changeset{} = Scorecard.change_round(round)
+    end
+  end
 end
