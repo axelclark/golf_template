@@ -9,6 +9,10 @@
   <%= date_select f, :started_on %>
   <%= error_tag f, :started_on %>
 
+  <%= label f, :course %>
+  <%= select(f, :course_id, Enum.map(@courses, &{&1.name, &1.id})) %>
+  <%= error_tag f, :course_id %>
+
   <div>
     <%= submit "Save" %>
   </div>

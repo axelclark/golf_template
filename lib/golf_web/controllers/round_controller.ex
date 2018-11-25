@@ -11,7 +11,8 @@ defmodule GolfWeb.RoundController do
 
   def new(conn, _params) do
     changeset = Scorecard.change_round(%Round{})
-    render(conn, "new.html", changeset: changeset)
+    courses = Scorecard.list_courses()
+    render(conn, "new.html", changeset: changeset, courses: courses)
   end
 
   def create(conn, %{"round" => round_params}) do
@@ -22,7 +23,8 @@ defmodule GolfWeb.RoundController do
         |> redirect(to: Routes.round_path(conn, :show, round))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        courses = Scorecard.list_courses()
+        render(conn, "new.html", changeset: changeset, courses: courses)
     end
   end
 
@@ -33,8 +35,9 @@ defmodule GolfWeb.RoundController do
 
   def edit(conn, %{"id" => id}) do
     round = Scorecard.get_round!(id)
+    courses = Scorecard.list_courses()
     changeset = Scorecard.change_round(round)
-    render(conn, "edit.html", round: round, changeset: changeset)
+    render(conn, "edit.html", round: round, changeset: changeset, courses: courses)
   end
 
   def update(conn, %{"id" => id, "round" => round_params}) do
@@ -47,7 +50,8 @@ defmodule GolfWeb.RoundController do
         |> redirect(to: Routes.round_path(conn, :show, round))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", round: round, changeset: changeset)
+        courses = Scorecard.list_courses()
+        render(conn, "edit.html", round: round, changeset: changeset, courses: courses)
     end
   end
 
