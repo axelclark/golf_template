@@ -11,6 +11,12 @@ defmodule GolfWeb.Schema.ScorecardTypes do
     end
   end
 
+  @desc "Inputs to create a course"
+  input_object :course_input do
+    field :name, non_null(:string)
+    field :num_holes, non_null(:integer)
+  end
+
   @desc "A hole on a course"
   object :hole do
     field :id, :id

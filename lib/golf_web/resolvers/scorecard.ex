@@ -12,4 +12,22 @@ defmodule GolfWeb.Resolvers.Scorecard do
     query = Ecto.assoc(course, :holes)
     {:ok, Golf.Repo.all(query)}
   end
+
+  def create_course(_parent, %{input: params}, _resolution) do
+    case Golf.Scorecard.create_course(params) do
+      {:error, changeset} ->
+        {
+          :error,
+          message: "Couldn't create course",
+          details: error_details(changeset)
+        }
+      {:ok, _} = success ->
+        success
+    end
+  end
+
+  def error_details(changeset) do
+    changeset
+    |> Ecto.Changeset.traverse_errors(fn {msg, _} -> msg end)
+  end
 end

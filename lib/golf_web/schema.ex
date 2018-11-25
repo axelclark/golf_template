@@ -4,8 +4,14 @@ defmodule GolfWeb.Schema do
 
   alias GolfWeb.Resolvers
 
-  query do
+  mutation do
+    field :create_course, :course do
+      arg :input, non_null(:course_input)
+      resolve &Resolvers.Scorecard.create_course/3
+    end
+  end
 
+  query do
     @desc "Get all courses"
     field :courses, list_of(:course) do
       resolve &Resolvers.Scorecard.list_courses/3
